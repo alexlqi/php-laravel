@@ -27,7 +27,7 @@ class Zipcodes extends Seeder
         $currentCode=0;
         foreach ($lines as $zip) {
             // separamos los datos
-            $zip=explode("|",strtoupper($zip));
+            $zip=explode("|",$zip);
 
             if(count($zip) != 15) continue;
             
@@ -51,8 +51,8 @@ class Zipcodes extends Seeder
             //definimos el settlement
             $settle=[
                 "key" => $zip[12]*1,
-                "name" => $zip[1],
-                "zone_type" => $zip[13],
+                "name" => strtoupper($zip[1]),
+                "zone_type" => strtoupper($zip[13]),
                 "settlement_type" => ["name" => $zip[2]]
             ];
 
@@ -77,14 +77,15 @@ class Zipcodes extends Seeder
                  */
                 $zipCode[$zip[0]]=[
                     "zip_code"=>$zip[0],
-                    "locality"=>$zip[5],
+                    "locality"=>strtoupper($zip[5]),
                     "federal_entity"=>[
                         "key"=>$zip[7]*1,
-                        "name"=>$zip[4],
+                        "name"=>strtoupper($zip[4]),
+                        "code"=>null,
                     ],
                     "municipality"=>[
                         "key"=>$zip[11]*1,
-                        "name"=>$zip[3],
+                        "name"=>strtoupper($zip[3]),
                     ],
                     "settlements"=>[$settle]
                 ];
