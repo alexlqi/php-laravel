@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  app:
+    container_name: laravelzip
+    build: ./build/laravel
+    links:
+      - mongonode
+    ports:
+      - "8383:80"
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    command: bash -c "chown -R www-data:www-data /var/www/* && cd /var/www/html && sleep 30 && php artisan db:seed --class=Zipcodes && apachectl -DFOREGROUND"
+  mongonode:
+    image: mongo:5.0
+    container_name: mongonode
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=testLaravel
+      - MONGO_INITDB_ROOT_PASSWORD=testLaravel
+    restart: unless-stopped
+    ports:
+      - "22027:27017"
+    volumes:
+      - ./database/mongodb/db:/data/db
+      - ./database/mongodb/dev.archive:/Databases/dev.archive
+      - ./database/mongodb/production:/Databases/production
