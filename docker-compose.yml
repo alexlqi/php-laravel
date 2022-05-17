@@ -10,7 +10,7 @@ services:
     volumes:
       - ./src:/var/www/html
     working_dir: /var/www/html
-    command: bash -c "chown -R www-data:www-data /var/www/* && cd /var/www/html && sleep 30 && php artisan db:seed --class=Zipcodes && apachectl -DFOREGROUND"
+    command: bash -c "chown -R www-data:www-data /var/www/* && cd /var/www/html && sleep 30 && php artisan key:generate && php artisan db:seed --class=Zipcodes --force && apachectl -DFOREGROUND"
   mongonode:
     image: mongo:5.0
     container_name: mongonode
