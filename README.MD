@@ -11,3 +11,6 @@ and store every zip code with settlements as an array inside the main document
 
 I thought that it would be better to process everything once and for all on docker up
 and retrive the information already processed from mongodb.
+
+Also, I used an apache load balancer to access the docker web service locally and
+used letsencrypt certbot to make the site https
